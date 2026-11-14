@@ -1,172 +1,115 @@
+
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { ArrowLeft, Users, MessageCircle, Heart, Globe, ShieldCheck } from "lucide-react";
 
 const communityData = {
-  "canada-students": {
-    name: "Indian Students in Canada",
-    location: "Canada",
-    flag: "🇨🇦",
-    members: 1240,
-    description:
-      "A supportive community for Indian students studying and living in Canada.",
+  india: {
+    name: "India", flag: "🇮🇳",
+    intro: "A welcoming space for Indian students studying around the world.",
+    topics: ["University and admission experiences", "Food and cultural traditions", "Accommodation and living tips", "Making friends and networking"],
+    tips: ["Share useful university experiences.", "Help new students settle into their destination.", "Respect different opinions and backgrounds."]
   },
-
-  "uk-students": {
-    name: "International Students in UK",
-    location: "United Kingdom",
-    flag: "🇬🇧",
-    members: 980,
-    description:
-      "Connect with students from different countries studying in the UK.",
+  nepal: {
+    name: "Nepal", flag: "🇳🇵",
+    intro: "Connect with Nepali students and share your experiences abroad.",
+    topics: ["Student life abroad", "Nepali food and culture", "Study and accommodation tips", "Friendship and networking"],
+    tips: ["Welcome new students.", "Share helpful local information.", "Keep discussions friendly and respectful."]
   },
-
-  "australia-students": {
-    name: "Students in Australia",
-    location: "Australia",
-    flag: "🇦🇺",
-    members: 760,
-    description:
-      "Share experiences and connect with students across Australia.",
+  bangladesh: {
+    name: "Bangladesh", flag: "🇧🇩",
+    intro: "Find a familiar connection with Bangladeshi students around the world.",
+    topics: ["University life and study advice", "Food and cultural connections", "Housing and budgeting", "Student friendships"],
+    tips: ["Share your learning experiences.", "Support students preparing to travel.", "Respect every community member."]
   },
-
-  "usa-students": {
-    name: "Students in USA",
-    location: "United States",
-    flag: "🇺🇸",
-    members: 650,
-    description:
-      "A community for students studying at universities across the USA.",
+  nigeria: {
+    name: "Nigeria", flag: "🇳🇬",
+    intro: "A place for Nigerian students to connect, support and learn from each other.",
+    topics: ["Study abroad experiences", "Nigerian food and traditions", "Accommodation and finances", "Career and networking"],
+    tips: ["Share reliable student resources.", "Encourage students who are new abroad.", "Keep conversations welcoming."]
   },
+  china: {
+    name: "China", flag: "🇨🇳",
+    intro: "Connect with Chinese students and exchange experiences from student life abroad.",
+    topics: ["Education and university experiences", "Language and cultural exchange", "Food and accommodation", "Friendship and networking"],
+    tips: ["Share useful cultural advice.", "Help students adjust to a new place.", "Respect different perspectives."]
+  },
+  pakistan: {
+    name: "Pakistan", flag: "🇵🇰",
+    intro: "Meet Pakistani students and build connections wherever your studies take you.",
+    topics: ["University and study guidance", "Food and cultural traditions", "Housing and daily life", "Friendship and career networking"],
+    tips: ["Share your student journey.", "Support new international students.", "Keep the community respectful."]
+  }
 };
 
 export default async function CommunityDetailPage({ params }) {
-
   const { communityId } = await params;
-
-  const community = communityData[communityId];
+  const slug = String(communityId).toLowerCase();
+  const community = communityData[slug];
 
   if (!community) {
-    notFound();
+    return (
+      <main className="ffh-directory">
+        <div className="ffh-country-empty">
+          <Users size={40} />
+          <h1>Community not found</h1>
+          <p>Please choose one of our available student communities.</p>
+          <Link href="/community" className="ffh-directory-button">Back to Community</Link>
+        </div>
+      </main>
+    );
   }
 
   return (
-    <main className="community-detail-page">
+    <main className="ffh-directory">
+      <div className="ffh-detail-container">
+        <Link href="/community" className="ffh-detail-back">
+          <ArrowLeft size={17} /> All Communities
+        </Link>
 
-      <Link
-        href="/community"
-        className="community-back"
-      >
-        ← Back to Communities
-      </Link>
+        <section className="ffh-detail-hero">
+          <div className="ffh-detail-flag">{community.flag}</div>
+          <span className="ffh-directory-eyebrow"><Globe size={15} /> STUDENT COMMUNITY</span>
+          <h1>{community.name} Students</h1>
+          <p>{community.intro}</p>
+        </section>
 
+        <section className="ffh-detail-content">
+          <div className="ffh-detail-panel">
+            <div className="ffh-detail-panel-icon"><MessageCircle /></div>
+            <h2>What you can explore</h2>
+            <p>Connect with students and exchange helpful experiences about:</p>
+            <ul>
+              {community.topics.map((topic) => <li key={topic}>{topic}</li>)}
+            </ul>
+          </div>
 
-      {/* COMMUNITY HERO */}
+          <div className="ffh-detail-panel ffh-detail-welcome">
+            <div className="ffh-detail-panel-icon"><Heart /></div>
+            <h2>A community that feels familiar</h2>
+            <p>Moving to a new country can feel challenging. Connecting with students who share familiar experiences can help you feel more supported.</p>
+            <div className="ffh-detail-note">
+              <ShieldCheck size={20} />
+              <span>Be kind, protect personal information and verify important advice through official sources.</span>
+            </div>
+          </div>
+        </section>
 
-      <section className="community-detail-hero">
+        <section className="ffh-detail-tips">
+          <Users size={25} />
+          <div>
+            <h2>Community guidelines</h2>
+            <ul>
+              {community.tips.map((tip) => <li key={tip}>{tip}</li>)}
+            </ul>
+          </div>
+        </section>
 
-        <div className="community-detail-flag">
-          {community.flag}
+        <div className="ffh-detail-bottom">
+          <Link href="/community" className="ffh-directory-button">
+            <ArrowLeft size={16} /> Explore other communities
+          </Link>
         </div>
-
-        <div>
-
-          <span className="section-label">
-            STUDENT COMMUNITY
-          </span>
-
-          <h1>
-            {community.name}
-          </h1>
-
-          <p>
-            {community.description}
-          </p>
-
-        </div>
-
-      </section>
-
-
-      {/* STATS */}
-
-      <section className="community-stats">
-
-        <div>
-          <strong>
-            {community.members}
-          </strong>
-
-          <span>
-            Members
-          </span>
-        </div>
-
-        <div>
-          <strong>
-            {community.location}
-          </strong>
-
-          <span>
-            Destination
-          </span>
-        </div>
-
-        <div>
-          <strong>
-            Active
-          </strong>
-
-          <span>
-            Community
-          </span>
-        </div>
-
-      </section>
-
-
-      {/* ABOUT */}
-
-      <section className="community-detail-content">
-
-        <div>
-
-          <h2>
-            About this community
-          </h2>
-
-          <p>
-            This community is a place where international
-            students can connect, ask questions, share
-            experiences and support each other.
-          </p>
-
-          <p>
-            You can discuss accommodation, university life,
-            food, banking, transportation and everyday life.
-          </p>
-
-        </div>
-
-
-        <div className="community-join-card">
-
-          <h2>
-            Join the community
-          </h2>
-
-          <p>
-            Connect with students and make your experience
-            abroad easier.
-          </p>
-
-          <button>
-            Join Community
-          </button>
-
-        </div>
-
-      </section>
-
+      </div>
     </main>
   );
 }
