@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
   FileText,
@@ -7,228 +8,168 @@ import {
   Users,
   ShieldAlert,
   ArrowRight,
-  Globe2
+  Globe2,
+  Sparkles,
 } from "lucide-react";
 
 const supportOptions = [
   {
-    icon: <FileText size={26} />,
+    icon: FileText,
     title: "Documentation",
     description: "Visa, university and important document guidance.",
-    href: "/documentation"
+    href: "/documentation",
+    tag: "Essential",
   },
   {
-    icon: <CreditCard size={26} />,
+    icon: CreditCard,
     title: "Banking & SIM",
     description: "Bank accounts, SIM cards and money-related guidance.",
-    href: "/banking"
+    href: "/banking",
+    tag: "Finance",
   },
   {
-    icon: <Utensils size={26} />,
+    icon: Utensils,
     title: "Food & Grocery",
     description: "Find familiar food and useful grocery information.",
-    href: "/food"
+    href: "/food",
+    tag: "Daily life",
   },
   {
-    icon: <Languages size={26} />,
+    icon: Languages,
     title: "Language Help",
     description: "Useful language resources for everyday communication.",
-    href: "/language"
+    href: "/language",
+    tag: "Learning",
   },
   {
-    icon: <Users size={26} />,
+    icon: Users,
     title: "Community",
     description: "Connect with students and build your support network.",
-    href: "/community"
+    href: "/community",
+    tag: "Connect",
   },
   {
-    icon: <ShieldAlert size={26} />,
+    icon: ShieldAlert,
     title: "Emergency",
-    description: "Important emergency contacts and information.",
-    href: "/emergency"
-  }
+    description: "Important emergency contacts and safety information.",
+    href: "/emergency",
+    tag: "Safety",
+  },
 ];
 
 export default function Dashboard() {
   return (
     <main className="dashboard-page">
-
-      {/* Welcome */}
       <section className="dashboard-header">
-
-        <div>
-          <span className="section-label">
-            STUDENT DASHBOARD
-          </span>
-
-          <h1>
-            Welcome back, Abhishek 👋
-          </h1>
-
+        <div className="dashboard-welcome">
+          <span className="section-label">STUDENT DASHBOARD</span>
+          <h1>Welcome back, Abhishek 👋</h1>
           <p>
-            Everything you need to feel more comfortable
+            Everything you need to feel comfortable, confident
             and connected while studying abroad.
           </p>
         </div>
 
         <div className="country-badge">
-          <Globe2 size={22} />
+          <Globe2 size={23} />
           <span>International Student</span>
         </div>
-
       </section>
 
-
-      {/* Quick Actions */}
       <section className="dashboard-section">
-
         <div className="section-heading dashboard-heading">
-
           <div>
-            <span className="section-label">
-              QUICK ACTIONS
-            </span>
-
-            <h2>
-              What do you need help with?
-            </h2>
+            <span className="section-label">QUICK ACTIONS</span>
+            <h2>What do you need help with?</h2>
+            <p>Explore helpful resources for your journey abroad.</p>
           </div>
-
+          <span className="dashboard-sparkle">
+            <Sparkles size={22} />
+          </span>
         </div>
-
 
         <div className="support-grid">
+          {supportOptions.map((item) => {
+            const Icon = item.icon;
 
-          {supportOptions.map((item) => (
+            return (
+              <Link
+                href={item.href}
+                className="support-card"
+                key={item.title}
+              >
+                <div className="support-card-top">
+                  <div className="support-icon">
+                    <Icon size={25} />
+                  </div>
+                  <span className="support-tag">{item.tag}</span>
+                </div>
 
-            <Link
-              href={item.href}
-              className="support-card"
-              key={item.title}
-            >
+                <div className="support-content">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
 
-              <div className="support-icon">
-                {item.icon}
-              </div>
-
-              <div className="support-content">
-
-                <h3>
-                  {item.title}
-                </h3>
-
-                <p>
-                  {item.description}
-                </p>
-
-              </div>
-
-              <ArrowRight
-                size={20}
-                className="support-arrow"
-              />
-
-            </Link>
-
-          ))}
-
+                <div className="support-card-footer">
+                  <span>Explore resources</span>
+                  <ArrowRight size={19} className="support-arrow" />
+                </div>
+              </Link>
+            );
+          })}
         </div>
-
       </section>
 
-
-      {/* Recent Activity */}
       <section className="dashboard-bottom">
-
         <div className="activity-card">
-
           <div className="card-header">
-
             <div>
-              <span className="section-label">
-                RECENT ACTIVITY
-              </span>
-
-              <h2>
-                Your recent support
-              </h2>
+              <span className="section-label">RECENT ACTIVITY</span>
+              <h2>Your student resources</h2>
             </div>
-
           </div>
 
-
-          <div className="activity-item">
-
+          <Link href="/documentation" className="activity-item">
             <div className="activity-icon">
-              <FileText size={20} />
+              <FileText size={21} />
             </div>
-
-            <div>
-              <h3>
-                Documentation resources
-              </h3>
-
-              <p>
-                Explore important student documents.
-              </p>
+            <div className="activity-text">
+              <h3>Documentation resources</h3>
+              <p>Explore important student documents.</p>
             </div>
+            <ArrowRight size={19} />
+          </Link>
 
-            <ArrowRight size={18} />
-
-          </div>
-
-
-          <div className="activity-item">
-
+          <Link href="/community" className="activity-item">
             <div className="activity-icon">
-              <Users size={20} />
+              <Users size={21} />
             </div>
-
-            <div>
-              <h3>
-                Student community
-              </h3>
-
-              <p>
-                Find students with similar interests.
-              </p>
+            <div className="activity-text">
+              <h3>Student community</h3>
+              <p>Connect with students from around the world.</p>
             </div>
-
-            <ArrowRight size={18} />
-
-          </div>
-
+            <ArrowRight size={19} />
+          </Link>
         </div>
 
-
-        {/* Help Card */}
         <div className="help-card">
-
           <div className="help-icon">
             <Globe2 size={30} />
           </div>
 
-          <h2>
-            New to your destination?
-          </h2>
-
+          <span className="section-label">START YOUR JOURNEY</span>
+          <h2>New to your destination?</h2>
           <p>
-            Explore region-specific information about
-            living, studying and settling into your new home.
+            Discover country-specific information about living,
+            studying and settling into your new home.
           </p>
 
-          <Link
-            href="/explore"
-            className="primary-button"
-          >
+          <Link href="/explore" className="primary-button">
             Explore Resources
             <ArrowRight size={18} />
           </Link>
-
         </div>
-
       </section>
-
     </main>
   );
 }
